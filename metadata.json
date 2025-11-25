@@ -1,0 +1,7 @@
+{
+  "name": "VenueAccess",
+  "description": "Ticket activation, reservation, and validation system for venues.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
