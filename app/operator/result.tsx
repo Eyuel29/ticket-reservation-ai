@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext';
 import { Ticket } from '../../types';
 import clsx from 'clsx';
 import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 export default function ScanResult() {
   const { ticketCode } = useLocalSearchParams<{ ticketCode: string }>();
@@ -16,7 +17,8 @@ export default function ScanResult() {
   const [result, setResult] = useState<{valid: boolean; reason: string; ticket?: Ticket} | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Simulate processing delay
+    const timer = setTimeout(() => {
        if (ticketCode) {
          const res = validateTicketScan(ticketCode);
          setResult(res);
@@ -26,15 +28,22 @@ export default function ScanResult() {
          setLoading(false);
        }
     }, 800);
+    return () => clearTimeout(timer);
   }, [ticketCode]);
 
   const handleScanNext = () => {
-    router.replace('/operator/scanner');
+    // Since this is a modal, dismissing it returns to the underlying scanner tab
+    if (router.canDismiss()) {
+        router.dismiss();
+    } else {
+        router.replace('/operator/(tabs)');
+    }
   };
 
   if (loading) {
     return (
         <View className="flex-1 justify-center items-center bg-slate-900">
+            <StatusBar style="light" />
             <ActivityIndicator size="large" color="#818cf8" />
             <Text className="text-indigo-200 mt-4 font-medium">Verifying Ticket...</Text>
         </View>
@@ -50,6 +59,7 @@ export default function ScanResult() {
 
   return (
     <View className={clsx("flex-1 px-8 justify-center", bgClass)}>
+        <StatusBar style="light" />
         <View className="items-center mb-8">
             <Ionicons name={iconName} size={120} color="white" style={{ opacity: 0.9 }} />
             <Text className="text-4xl font-black text-white mt-4 text-center tracking-tight">
@@ -97,15 +107,6 @@ export default function ScanResult() {
                 Scan Next Ticket
             </Text>
         </TouchableOpacity>
-        
-        {!isSuccess && result?.ticket && (
-            <TouchableOpacity 
-                onPress={() => alert('Supervisor PIN required')}
-                className="mt-6 self-center"
-            >
-                <Text className="text-white/70 font-semibold underline">Manual Override</Text>
-            </TouchableOpacity>
-        )}
     </View>
   );
 }

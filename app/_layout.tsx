@@ -29,23 +29,8 @@ export default function RootLayout() {
           {/* Delegate customer navigation to app/customer/_layout.tsx */}
           <Stack.Screen name="customer" options={{ headerShown: false }} />
 
-          <Stack.Screen 
-            name="operator/scanner" 
-            options={{ 
-              title: 'Scan Ticket', 
-              presentation: 'modal',
-              headerStyle: { backgroundColor: '#0f172a' },
-              headerTintColor: '#fff' 
-            }} 
-          />
-          <Stack.Screen 
-            name="operator/result" 
-            options={{ 
-              title: 'Result', 
-              presentation: 'modal',
-              headerShown: false
-            }} 
-          />
+          {/* Delegate operator navigation to app/operator/_layout.tsx */}
+          <Stack.Screen name="operator" options={{ headerShown: false }} />
         </Stack>
       </AppProvider>
     </SafeAreaProvider>

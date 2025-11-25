@@ -19,7 +19,7 @@ export default function LoginScreen() {
 
     // Mock Authentication Logic
     if (type === 'operator') {
-      router.replace('/operator/scanner');
+      router.replace('/operator/(tabs)');
     } else {
       router.replace('/customer/(tabs)');
     }
