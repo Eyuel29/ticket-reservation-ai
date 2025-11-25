@@ -5,13 +5,15 @@ export default function CustomerLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#1e293b',
+          backgroundColor: '#fff',
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#0f172a',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: '700',
         },
-        headerBackTitleVisible: false,
+        headerShadowVisible: false,
+        headerBackTitle: "",
+        contentStyle: { backgroundColor: '#f8fafc' },
       }}
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
